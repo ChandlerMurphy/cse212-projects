@@ -1,0 +1,139 @@
+Rules of Thumb for the Big O:
+1. Nested Loops - Multiply, Serial Loops - Add
+2. Drop Constant Coefficients
+3. Drop Lesser Exponents (non-dominating terms)
+
+Common Comnplexities: 
+______________O(1) -> Constant Time______________
+bool FindBob(List nameList)
+{
+    return false;
+}
+
+______________O(log n) -> Logarithmic Time______________
+20,000
+
+______________O(n) -> Linear Time______________
+bool FindBob(int n) 
+{
+    for (int i = 0; i < n; i++)
+    {
+        Console.WriteLine(i);
+    }
+}
+
+O(n log n) ->
+
+
+______________O(n^2) -> Quadratic or Polynomial______________
+void MultiplicationTabe(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++){
+            Console.WriteLine((i + 1) * (j + 1));
+        }
+    }
+}
+
+______________O(2^n) -> Exponential Time______________
+Traveling Salesman
+
+n = 10
+2^10 = 1024
+
+n = 20
+2^20 = 1 million
+
+______________O(n!) - Factorial______________
+All permutations of an array
+
+
+
+
+__________________________________________________________
+
+Example #1
+
+static void DoSomething(int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    Console.WriteLine(n * n);
+  }
+
+  for (i = n; i > 0; i--)
+  {
+    Console.WriteLine(n * n * n);
+  }
+}
+
+Solution: This function is O(n). Even though there are two loops, because they are not nested inside one another, the performance would be O(2n) 
+which simplifies down to O(n) when the constant is dropped.
+
+
+Example #2
+
+static void DoSomethingElse(List<string> words)
+{
+  for (int i = 0; i < words.Count; i++)
+  {
+    for (int j = 0; j < words.Count; j++)
+    {
+      Console.WriteLine(".");
+    }
+  }
+}
+
+Solution: This function is O(n^2). Notice that in this case, the 
+loops are nested and both depend on the variable "n" which is shorthand for the length of the list.
+
+Example #3
+static void DoAnotherThing(List<string> words)
+{
+  string sentence = "The quick brown fox jumps over the lazy dog";
+  for (int i = 0; i < words.Count; i++)
+  {
+    for (int j = 0; j < sentence.Length; j++)
+    {
+      Console.WriteLine(".");
+    }
+  }
+}
+
+Solution: This function is O(n). This one is tricky, because there are two loops nested inside each other, 
+but notice that only one of the loops depends on the variable n. The other depends on the length of 
+the sentence which is a fixed constant. Thus, as the amount of words in the list gets large, it will 
+dominate the constant factor added by iterating through the length of the sentence.
+
+
+__________________________________________________________
+
+Ordering the Big O Notation from Smallest to Largest
+
+y = 1                  // O(1)
+
+y = log(n)            // O(log n)
+
+y = n                // O(n)
+
+y = n*log(n)         // O(n log n)
+
+y = n^2             // O(n²)
+
+y = 2^n             // O(2ⁿ)
+
+
+O(1) — constant time (flat line)
+O(log n) — very slow growth
+O(n) — linear
+O(n log n) — slightly faster than linear
+O(n²) — quadratic growth
+O(2ⁿ) — exponential (blows up fast!)
+
+O(1)	    /   Constant time — best
+(log n)	    /   Logarithmic — very efficient
+O(n)	    /   Linear — common for loops
+O(n log n)	/   Merge sort, efficient sorts
+O(n²)	    /   Nested loops, bubble sort
+O(2ⁿ)	    /   Exponential — impractical fast
