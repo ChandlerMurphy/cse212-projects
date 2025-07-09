@@ -9,9 +9,19 @@
 /// </summary>
 public class TakingTurnsQueue
 {
-    private readonly PersonQueue _people = new();
+    private readonly Queue<Person> _people = new();
 
-    public int Length => _people.Length;
+    public int Length => _people.Count;
+
+    public void Enqueue(Person person)
+    {
+        _people.Enqueue(person);
+    }
+
+    public Person Dequeue()
+    {
+        return _people.Dequeue();
+    }
 
     /// <summary>
     /// Add new people to the queue with a name and number of turns
@@ -22,6 +32,7 @@ public class TakingTurnsQueue
     {
         var person = new Person(name, turns);
         _people.Enqueue(person);
+        // Console.WriteLine($"AddPerson: {ToString(_people)}");
     }
 
     /// <summary>
@@ -33,25 +44,38 @@ public class TakingTurnsQueue
     /// </summary>
     public Person GetNextPerson()
     {
-        if (_people.IsEmpty())
+        if (_people.Count == 0)
         {
             throw new InvalidOperationException("No one in the queue.");
         }
         else
         {
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+
+            if (person.Turns <= 0)
             {
-                person.Turns -= 1;
+                // Infinite turns: don't decrement, just re-enqueue
                 _people.Enqueue(person);
+            }
+            else
+            {
+                // Finite turns: decrement
+                person.Turns--;
+
+                if (person.Turns > 0)
+                {
+                    _people.Enqueue(person);
+                }
+                // else: Do not re-enqueue (they're done)
             }
 
             return person;
         }
     }
 
-    public override string ToString()
+
+    private string ToString(Queue<Person> queue)
     {
-        return _people.ToString();
+        return "[" + string.Join(", ", queue.Select(p => $"{p.Name}:{p.Turns}")) + "]";
     }
 }
